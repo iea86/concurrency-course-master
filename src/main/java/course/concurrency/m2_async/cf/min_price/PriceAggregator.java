@@ -35,16 +35,11 @@ public class PriceAggregator {
                             .handle((res, ex) -> res != null ? res : Double.POSITIVE_INFINITY);
             completableFutureList.add(cfForShop);
         }
-//await completion of a set of independent CompletableFutures before continuing a program,
+        //await completion of a set of independent CompletableFutures before continuing a program,
         CompletableFuture
                 .allOf(completableFutureList.toArray(CompletableFuture[]::new))
                 .join();
-        System.out.println(completableFutureList
-                .stream()
-                .mapToDouble(CompletableFuture::join)
-                .filter(Double::isFinite)
-                .min()
-                .orElse(Double.NaN));
+
         return completableFutureList
                 .stream()
                 .mapToDouble(CompletableFuture::join)
