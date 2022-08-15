@@ -28,7 +28,6 @@ public class PriceAggregator {
         List<CompletableFuture<Double>> completableFutureList = new ArrayList<>();
 
         for (var shopId : shopIds) {
-
             CompletableFuture<Double> cfForShop =
                     CompletableFuture.supplyAsync(() -> priceRetriever.getPrice(itemId, shopId), executor)
                             .completeOnTimeout(Double.POSITIVE_INFINITY, 2900, TimeUnit.MILLISECONDS)
