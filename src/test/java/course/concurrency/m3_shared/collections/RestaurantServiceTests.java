@@ -32,7 +32,8 @@ public class RestaurantServiceTests {
         stat.printStatistics();
     }
 
-    @RepeatedTest(TEST_COUNT)
+    //@RepeatedTest(TEST_COUNT)
+    @Test
     public void test() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
 
@@ -52,6 +53,7 @@ public class RestaurantServiceTests {
         executor.awaitTermination(30, TimeUnit.SECONDS);
         long end = System.currentTimeMillis();
 
+        System.out.println(service.printStat());
         assertEquals(Set.of("A - " + iterations), service.printStat());
         stat.addData("service",end - start);
     }
