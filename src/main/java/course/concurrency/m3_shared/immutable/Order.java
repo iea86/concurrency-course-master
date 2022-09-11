@@ -31,8 +31,8 @@ public class Order {
         this.status = NEW;
     }
 
-    public synchronized boolean checkStatus() {
-        if (items != null && !items.isEmpty() && paymentInfo != null && isPacked) {
+    public boolean checkStatus() {
+        if (paymentInfo != null && isPacked) {
             return true;
         }
         return false;
