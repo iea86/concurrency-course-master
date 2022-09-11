@@ -9,11 +9,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class OrderService {
 
     private final ConcurrentHashMap<Long, AtomicReference<Order>> currentOrders = new ConcurrentHashMap<>();
-    private long nextId = 0L;
-
-    private synchronized long nextId() {
-        return nextId++;
-    }
 
     public long createOrder(List<Item> items) {
         Order order = new Order(items);
@@ -21,7 +16,7 @@ public class OrderService {
         return order.getId();
     }
 
-    public synchronized void updatePaymentInfo(long orderId, PaymentInfo paymentInfo) {
+    public void updatePaymentInfo(long orderId, PaymentInfo paymentInfo) {
         Order current, paid;
         do {
             current = currentOrders.get(orderId).get();
@@ -34,7 +29,7 @@ public class OrderService {
         }
     }
 
-    public synchronized void setPacked(long orderId) {
+    public void setPacked(long orderId) {
         Order current, packed;
         do {
             current = currentOrders.get(orderId).get();
@@ -46,7 +41,7 @@ public class OrderService {
         }
     }
 
-    private synchronized void deliver(Order order) {
+    private void deliver(Order order) {
         Order current, delivered;
         long orderId = order.getId();
         do {
